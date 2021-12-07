@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@800&display=swap');
+
+:root {
+  --color-font: rgba(255, 255, 255, 0.8);
+  --color-line-primary: rgba(255, 255, 255, 0.8);
+  --color-line-secondary: rgba(255, 255, 255, 0.4);
+  --color-background: rgba(0, 0, 0, 0.2);
+}
+
+body {
+  font-family: 'M PLUS 1p', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--color-font);
+}
+
+.min {
+  width: min-content;
+}
+
+.panel {
+  background-color: var(--color-background);
+  border-radius: 1rem;
+  padding: 0.5rem;
+}
+
+.encounter {
+  display: flex;
+}
+
+.encounter > div {
+  margin-right: 1rem;
+}
+
+.time {
+  position: relative;
+  width: 65px;
+}
+
+.time >span {
+  position: absolute;
+  font-size: 1.6rem;
+  left: 0;
+  top: -2px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+tr {
+  border-bottom: solid 1px;
+  border-color: var(--color-line-secondary);
+}
+
+tr:last-child {
+  border-color: var(--color-line-primary);
+}
+
+th {
+  font-size: 0.6rem;
+  border-bottom: solid 1px;
+  border-color: var(--color-line-primary);
+}
+
+.job {
+  width: 40px;
+}
+
+.dps {
+  width: 50px;
+}
+
+.crit, .direct, .directcrit, .death {
+  width: 50px;
+}
+
+td.job {
+  width: 40px;
+}
+
+td.job, td.name, td.death {
+  text-align: center;
+}
+
+td.dps, td.crit, td.direct, td.directcrit {
+  text-align: right;
+}

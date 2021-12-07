@@ -5,16 +5,56 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script type="text/javascript" src="https://ngld.github.io/OverlayPlugin/assets/shared/common.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-  <script type="text/javascript" src="main.js"></script>
+  <!-- CSS only -->
+  <link href="./main.css" rel="stylesheet">
   <title>My Overlay</title>
 </head>
 
 <body>
-  <div id="app">
-    {{ message }}
+  <div id="app" class="app">
+    <div class="panel" :class="{min: !active}">
+      <div class="encounter">
+        <div class="time"><span>{{ time }}</span></div>
+        <div>
+          <div>{{ encounter }}</div>
+          <div>DPS : <span>{{ totalDps }}</span></div>
+        </div>
+      </div>
+      <div v-if="active">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="header job">Job</th>
+              <th class="header name">Name</th>
+              <th class="header dps">DPS</th>
+              <th class="header crit">Crit</th>
+              <th class="header direct">Direct</th>
+              <th class="header directcrit">!!!</th>
+              <th class="header death">Death</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(data, index) in sortedCombatData" :key="data.name" :class="data.jobType" :style="{
+          background: data.background
+        }">
+              <td class="job">{{ data.job }}</td>
+              <td class="name">{{ data.name }}</td>
+              <td class="dps">{{ data.dps }}</td>
+              <td class="crit">{{ data.critHitPct }}</td>
+              <td class="direct">{{ data.directHitPct }}</td>
+              <td class="directcrit">{{ data.directCritHitPct }}</td>
+              <td class="death">{{ data.deaths }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/ffxiv-overlay-api@4/lib/overlay.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <!-- 本番用 -->
+  <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2"></script> -->
+  <script type="text/javascript" src="./main.js"></script>
 </body>
 
 </html>
