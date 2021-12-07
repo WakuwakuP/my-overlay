@@ -1,6 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@800&display=swap');
 
+[v-cloak] {
+  display: none;
+}
+
 :root {
   --color-font: rgba(255, 255, 255, 0.8);
   --color-line-primary: rgba(255, 255, 255, 0.8);
