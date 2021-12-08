@@ -50,6 +50,8 @@ const app = new Vue({
         this.combatData = this.combatData.filter(data => data.name == "You")
       } else {
         this.combatData = []
+        this.encounter = "Encounter"
+        this.time = "00:00"
       }
     },
   },
