@@ -73,16 +73,27 @@ th {
   width: 40px;
 }
 
+td.job {
+  display: flex;
+  justify-content: center;
+}
+
+.job-icon {
+  width: 17px;
+  height: 17px;
+}
+
+.job-icon > img {
+  width: 17px;
+  height: 17px;
+}
+
 .dps {
   width: 50px;
 }
 
 .crit, .direct, .directcrit, .death {
   width: 50px;
-}
-
-td.job {
-  width: 40px;
 }
 
 td.job, td.name, td.death {

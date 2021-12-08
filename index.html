@@ -37,7 +37,11 @@
             <tr v-for="(data, index) in sortedCombatData" :key="data.name" :class="data.jobType" :style="{
           background: data.background
         }">
-              <td class="job">{{ data.job }}</td>
+              <td class="job">
+                <div class="job-icon">
+                  <img :src="data.jobIcon" :alt="data.job">
+                </div>
+              </td>
               <td class="name">{{ data.name }}</td>
               <td class="dps">{{ data.dps }}</td>
               <td class="crit">{{ data.critHitPct }}</td>
@@ -51,9 +55,8 @@
     </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/ffxiv-overlay-api@4/lib/overlay.min.js"></script>
-  <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script> -->
   <!-- 本番用 -->
-  <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+  <script type="text/javascript" src="./lib/vue@2.js"></script>
   <script type="text/javascript" src="./main.js"></script>
 </body>
 

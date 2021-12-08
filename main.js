@@ -1,16 +1,21 @@
+const smn = new Image('./public/img/smn.png')
+
 const overlay = new OverlayAPI({
   extendData: true,
   silentMode: false,
   seperateLB: true,
 });
 
-const jobColor = (jobType) => {
+const jobColor = (data) => {
   const jobTypeColor = {
     'dps': 'rgba(200, 3, 8, 0.3)',
     'tank': 'rgba(41,112,243,0.3)',
     'healer': 'rgba(107,240,86,0.3)',
   }
-  if (jobType) {
+  if (/.* \(.*\)/.test(data.name)) {
+    return 'rgba(255, 230, 0, 0.3)'
+  }
+  if (data.jobType) {
     return jobTypeColor[jobType]
   }
 
@@ -41,6 +46,7 @@ const app = new Vue({
       console.log('listener of `ChangeZone`', data)
     });
     overlay.startEvent();
+    console.log(this.combatData)
   },
   beforeDestroy: function () {
   },
@@ -60,8 +66,12 @@ const app = new Vue({
         return 0
       }).map(data => {
         const dpsRange = Math.trunc(data.dps / this.maxDps * 100)
+        data.jobIcon = data.job ? `./img/icons/${data.job}.png` : './img/icons/error.png'
+        if (/.* \(.*\)/.test(data.name)) {
+          data.jobIcon = './img/icons/choco.png'
+        }
         data.background
-          = `linear-gradient(to right, rgba(0, 0, 0, 0), ${jobColor(data.jobType)} 5%, ${jobColor(data.jobType)} ${dpsRange - 5}%, rgba(0, 0, 0, 0) ${dpsRange}%, rgba(0, 0, 0, 0))`
+          = `linear-gradient(to right, rgba(0, 0, 0, 0), ${jobColor(data)} 5%, ${jobColor(data)} ${dpsRange - 5}%, rgba(0, 0, 0, 0) ${dpsRange}%, rgba(0, 0, 0, 0))`
         return data
       })
     },
