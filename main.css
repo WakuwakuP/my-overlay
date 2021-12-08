@@ -34,12 +34,12 @@ body {
 }
 
 .encounter > div {
-  margin-right: 1rem;
+  margin-right: 0.5rem;
 }
 
 .time {
   position: relative;
-  width: 65px;
+  width: 75px;
 }
 
 .time >span {
@@ -47,6 +47,28 @@ body {
   font-size: 1.6rem;
   left: 0;
   top: -2px;
+}
+
+.dpshps {
+  min-width: 3rem;
+}
+
+.flex {
+  display: flex;
+  white-space: nowrap;
+}
+
+.active {
+  min-width: 5rem;
+  margin-right: 1rem;
+}
+
+.dpstable {
+  display: block;
+}
+
+.hpstable {
+  display: block;
 }
 
 .table {

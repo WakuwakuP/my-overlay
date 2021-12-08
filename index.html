@@ -15,42 +15,77 @@
     <div class="panel" :class="{min: !active}">
       <div class="encounter">
         <div class="time"><span>{{ time }}</span></div>
-        <div>
-          <div>{{ encounter }}</div>
-          <div>DPS : <span>{{ totalDps }}</span></div>
+        <div class="flex">
+          <div :class="{active: active}">
+            <div>{{ encounter }}</div>
+            <div>{{ zoneName }}</div>
+          </div>
+          <div v-if="active" class="dpshps">
+            <div>DPS : <span>{{ totalDps }}</span></div>
+            <div>HPS : <span>{{ totalHps }}</span></div>
+          </div>
         </div>
       </div>
-      <div v-if="active">
-        <table class="table">
-          <thead>
-            <tr>
-              <th class="header job">Job</th>
-              <th class="header name">Name</th>
-              <th class="header dps">DPS</th>
-              <th class="header crit">Crit</th>
-              <th class="header direct">Direct</th>
-              <th class="header directcrit">!!!</th>
-              <th class="header death">Death</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(data, index) in sortedCombatData" :key="data.name" :class="data.jobType" :style="{
-          background: data.background
-        }">
-              <td class="job">
-                <div class="job-icon">
-                  <img :src="data.jobIcon" :alt="data.job">
-                </div>
-              </td>
-              <td class="name">{{ data.name }}</td>
-              <td class="dps">{{ data.dps }}</td>
-              <td class="crit">{{ data.critHitPct }}</td>
-              <td class="direct">{{ data.directHitPct }}</td>
-              <td class="directcrit">{{ data.directCritHitPct }}</td>
-              <td class="death">{{ data.deaths }}</td>
-            </tr>
-          </tbody>
-        </table>
+      <div v-if="active" class="datatable">
+        <div class="dpstable">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="header job">Job</th>
+                <th class="header name">Name</th>
+                <th class="header dps">DPS</th>
+                <th class="header crit">Crit</th>
+                <th class="header direct">Direct</th>
+                <th class="header directcrit">!!!</th>
+                <th class="header death">Death</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(data, index) in sortedCombatDataDps" :key="data.name" :class="data.jobType"
+                :style="{background: data.background}">
+                <td class="job">
+                  <div class="job-icon">
+                    <img :src="data.jobIcon" :alt="data.job">
+                  </div>
+                </td>
+                <td class="name">{{ data.name }}</td>
+                <td class="dps">{{ data.dps }}</td>
+                <td class="crit">{{ data.critHitPct }}</td>
+                <td class="direct">{{ data.directHitPct }}</td>
+                <td class="directcrit">{{ data.directCritHitPct }}</td>
+                <td class="death">{{ data.deaths }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div v-if="hpsTableActive" class="hpstable">
+          <table class="table">
+            <thead>
+              <tr>
+                <th class="header job">Job</th>
+                <th class="header name">Name</th>
+                <th class="header dps">HPS</th>
+                <th class="header crit">OverHeal</th>
+                <th class="header direct">heals%</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(data, index) in sortedCombatDataHps" :key="data.name" :class="data.jobType" :style="{
+                  background: data.backgroundHps
+                }">
+                <td class="job">
+                  <div class="job-icon">
+                    <img :src="data.jobIcon" :alt="data.job">
+                  </div>
+                </td>
+                <td class="name">{{ data.name }}</td>
+                <td class="dps">{{ data.hps }}</td>
+                <td class="crit">{{ data.overHealPct }}</td>
+                <td class="direct">{{ data.healsPct }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
