@@ -14,7 +14,9 @@
   <div id="app" class="app" v-clock>
     <div class="panel" :class="{min: !active}">
       <div class="encounter">
-        <div class="time"><span>{{ time }}</span></div>
+        <button class="time" @click="encounterClick">
+          <span>{{ time }}</span>
+        </button>
         <div class="flex">
           <div :class="{active: active}">
             <div>{{ encounter }}</div>

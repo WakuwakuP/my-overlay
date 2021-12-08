@@ -54,6 +54,13 @@ const app = new Vue({
         this.time = "00:00"
       }
     },
+    encounterClick() {
+      this.encounter = "Encounter"
+      this.time = "00:00"
+      this.totalDps = 0
+      this.totalHps = 0
+      this.combatData = []
+    },
   },
   mounted() {
     overlay.addListener('CombatData', (data) => {
