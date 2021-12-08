@@ -29,7 +29,7 @@ const app = new Vue({
   data: {
     time: "00:00",
     encounter: "Encounter",
-    zoneName: "",
+    zoneName: "no data",
     totalDps: 0,
     totalHps: 0,
     combatData: [],
