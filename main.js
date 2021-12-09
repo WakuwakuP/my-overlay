@@ -124,6 +124,7 @@ const app = new Vue({
             = `linear-gradient(to right, rgba(0, 0, 0, 0), ${jobColor(data)} 5%, ${jobColor(data)} ${dpsRange - 5}%, rgba(0, 0, 0, 0) ${dpsRange}%, rgba(0, 0, 0, 0))`
           return data
         })
+        .slice(0, 10)
     },
     sortedCombatDataHps() {
       return this.shapingCombatData
@@ -145,6 +146,7 @@ const app = new Vue({
             = `linear-gradient(to right, rgba(0, 0, 0, 0), ${jobColor(data)} 5%, ${jobColor(data)} ${healsPct - 5}%, rgba(0, 0, 0, 0) ${healsPct}%, rgba(0, 0, 0, 0))`
           return data
         })
+        .slice(0, 4)
     },
   }
 })
