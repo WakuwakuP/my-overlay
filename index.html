@@ -1,271 +1,281 @@
 <!DOCTYPE html>
 <html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- CSS only -->
+    <link href="./main.css" rel="stylesheet" />
+    <title>My Overlay</title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- CSS only -->
-  <link href="./main.css" rel="stylesheet">
-  <title>My Overlay</title>
-</head>
-
-<body>
-  <div id="app" class="app" v-clock>
-    <div class="panel" :class="{min: !active}">
-      <div class="encounter">
-        <button class="time" @click="encounterClick">
-          <span>{{ time }}</span>
-        </button>
-        <div class="flex">
-          <div :class="{active: active}">
-            <div>{{ encounter }}</div>
-            <div>{{ zoneName }}</div>
-          </div>
-          <div v-if="active" class="dpshps">
-            <div>DPS : <span>{{ totalDps }}</span></div>
-            <div>HPS : <span>{{ totalHps }}</span></div>
+  <body>
+    <div id="app" class="app" v-clock>
+      <div class="panel" :class="{min: !active}">
+        <div class="encounter">
+          <button class="time" @click="encounterClick">
+            <span>{{ time }}</span>
+          </button>
+          <div class="flex">
+            <div :class="{active: active}">
+              <div>{{ encounter }}</div>
+              <div>{{ zoneName }}</div>
+            </div>
+            <div v-if="active" class="dpshps">
+              <div>DPS : <span>{{ totalDps }}</span></div>
+              <div>HPS : <span>{{ totalHps }}</span></div>
+            </div>
           </div>
         </div>
-      </div>
-      <div v-if="active" class="datatable">
-        <div class="dpstable">
-          <table class="table">
-            <thead>
-              <tr>
-                <th class="header job">Job</th>
-                <th class="header name">Name</th>
-                <th class="header dps">DPS</th>
-                <th class="header crit">Crit</th>
-                <th class="header direct">Direct</th>
-                <th class="header directcrit">!!!</th>
-                <th class="header death">Death</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(data, index) in sortedCombatDataDps" :key="data.name" :class="data.jobType"
-                :style="{background: data.background}">
-                <td class="job">
-                  <div class="job-icon">
-                    <img :src="data.jobIcon" :alt="data.job">
-                  </div>
-                </td>
-                <td class="name">{{ data.name }}</td>
-                <td class="dps">{{ data.dps }}</td>
-                <td class="crit">{{ data.critHitPct }}</td>
-                <td class="direct">{{ data.directHitPct }}</td>
-                <td class="directcrit">{{ data.directCritHitPct }}</td>
-                <td class="death">{{ data.deaths }}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div v-if="hpsTableActive" class="hpstable">
-          <table class="table">
-            <thead>
-              <tr>
-                <th class="header job">Job</th>
-                <th class="header name">Name</th>
-                <th class="header dps">HPS</th>
-                <th class="header crit">OverHeal</th>
-                <th class="header direct">heals%</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(data, index) in sortedCombatDataHps" :key="data.name" :class="data.jobType" :style="{
+        <div v-if="active" class="datatable">
+          <div class="dpstable">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="header job">Job</th>
+                  <th class="header name">Name</th>
+                  <th class="header dps">DPS</th>
+                  <th class="header crit">Crit</th>
+                  <th class="header direct">Direct</th>
+                  <th class="header directcrit">!!!</th>
+                  <th class="header death">Death</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="(data, index) in sortedCombatDataDps"
+                  :key="data.name"
+                  :class="data.jobType"
+                  :style="{background: data.background}"
+                >
+                  <td class="job">
+                    <div class="job-icon">
+                      <img :src="data.jobIcon" :alt="data.job" />
+                    </div>
+                  </td>
+                  <td class="name">{{ data.name }}</td>
+                  <td class="dps">{{ data.dps }}</td>
+                  <td class="crit">{{ data.critHitPct }}</td>
+                  <td class="direct">{{ data.directHitPct }}</td>
+                  <td class="directcrit">{{ data.directCritHitPct }}</td>
+                  <td class="death">{{ data.deaths }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div v-if="hpsTableActive" class="hpstable">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="header job">Job</th>
+                  <th class="header name">Name</th>
+                  <th class="header dps">HPS</th>
+                  <th class="header crit">OverHeal</th>
+                  <th class="header direct">heals%</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="(data, index) in sortedCombatDataHps"
+                  :key="data.name"
+                  :class="data.jobType"
+                  :style="{
                   background: data.backgroundHps
-                }">
-                <td class="job">
-                  <div class="job-icon">
-                    <img :src="data.jobIcon" :alt="data.job">
-                  </div>
-                </td>
-                <td class="name">{{ data.name }}</td>
-                <td class="dps">{{ data.hps }}</td>
-                <td class="crit">{{ data.overHealPct }}</td>
-                <td class="direct">{{ data.healsPct }}</td>
-              </tr>
-            </tbody>
-          </table>
+                }"
+                >
+                  <td class="job">
+                    <div class="job-icon">
+                      <img :src="data.jobIcon" :alt="data.job" />
+                    </div>
+                  </td>
+                  <td class="name">{{ data.name }}</td>
+                  <td class="dps">{{ data.hps }}</td>
+                  <td class="crit">{{ data.overHealPct }}</td>
+                  <td class="direct">{{ data.healsPct }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <script type="text/javascript" src="./lib/ffxiv-overlay-api/overlay.min.js"></script>
-  <script type="text/javascript" src="./lib/vue/vue@2.js"></script>
-  <script type="text/javascript" src="./main.js"></script>
-  <style>
-  @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@800&display=swap');
+    <script
+      type="text/javascript"
+      src="./lib/ffxiv-overlay-api/overlay@4.8.0.min.js"
+    ></script>
+    <script type="text/javascript" src="./lib/vue/vue@2.js"></script>
+    <script type="text/javascript" src="./main.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@500&display=swap');
+      @import url('https://fonts.googleapis.com/css2?family=M+PLUS+1p:wght@800&display=swap');
 
-[v-cloak] {
-  display: none;
-}
+      [v-cloak] {
+        display: none;
+      }
 
-:root {
-  --color-font: rgba(255, 255, 255, 0.8);
-  --color-line-primary: rgba(255, 255, 255, 0.8);
-  --color-line-secondary: rgba(255, 255, 255, 0.4);
-  --color-background: rgba(0, 0, 0, 0.2);
-}
+      :root {
+        --color-font: rgba(255, 255, 255, 0.8);
+        --color-line-primary: rgba(255, 255, 255, 0.8);
+        --color-line-secondary: rgba(255, 255, 255, 0.4);
+        --color-background: rgba(0, 0, 0, 0.2);
+      }
 
-body {
-  font-family: 'M PLUS 1p', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 500;
-  color: var(--color-font);
-}
+      body {
+        font-family: 'M PLUS 1p', sans-serif;
+        font-size: 0.7rem;
+        font-weight: 500;
+        color: var(--color-font);
+      }
 
-body::-webkit-scrollbar {
-  display: none;
-}
+      body::-webkit-scrollbar {
+        display: none;
+      }
 
-.min {
-  width: min-content;
-}
+      .min {
+        width: min-content;
+      }
 
-.panel {
-  background-color: var(--color-background);
-  border-radius: 1rem;
-  padding: 0.5rem;
-}
+      .panel {
+        background-color: var(--color-background);
+        border-radius: 1rem;
+        padding: 0.5rem;
+      }
 
-.encounter {
-  display: flex;
-}
+      .encounter {
+        display: flex;
+      }
 
-.encounter > div,
-.encounter > button {
-  margin-right: 0.5rem;
-}
+      .encounter > div,
+      .encounter > button {
+        margin-right: 0.5rem;
+      }
 
-.time {
-  appearance: inherit;
-  font-style: inherit;
-  font-variant-ligatures: inherit;
-  font-variant-caps: inherit;
-  font-variant-numeric: inherit;
-  font-variant-east-asian: inherit;
-  font-weight: inherit;
-  font-stretch: inherit;
-  font-size: inherit;
-  font-family: inherit;
-  text-rendering: inherit;
-  color: inherit;
-  letter-spacing: inherit;
-  word-spacing: inherit;
-  line-height: inherit;
-  text-transform: inherit;
-  text-indent: 0px;
-  text-shadow: inherit;
-  display: block;
-  text-align: center;
-  align-items: inherit;
-  cursor: inherit;
-  box-sizing: inherit;
-  background-color: inherit;
-  margin: inherit;
-  padding: inherit;
-  border-width: 0;
-  border-style: inherit;
-  border-color: inherit;
-  border-image: inherit;
-  position: relative;
-  width: 75px;
-}
+      .time {
+        appearance: inherit;
+        font-style: inherit;
+        font-variant-ligatures: inherit;
+        font-variant-caps: inherit;
+        font-variant-numeric: inherit;
+        font-variant-east-asian: inherit;
+        font-weight: inherit;
+        font-stretch: inherit;
+        font-size: inherit;
+        font-family: inherit;
+        text-rendering: inherit;
+        color: inherit;
+        letter-spacing: inherit;
+        word-spacing: inherit;
+        line-height: inherit;
+        text-transform: inherit;
+        text-indent: 0px;
+        text-shadow: inherit;
+        display: block;
+        text-align: center;
+        align-items: inherit;
+        cursor: inherit;
+        box-sizing: inherit;
+        background-color: inherit;
+        margin: inherit;
+        padding: inherit;
+        border-width: 0;
+        border-style: inherit;
+        border-color: inherit;
+        border-image: inherit;
+        position: relative;
+        width: 75px;
+      }
 
-.time:hover {
-  outline: white solid 1px;
-}
-.time:active {
-  color: var(--color-line-primary);
-  background-color: var(--color-line-secondary);
-}
+      .time:hover {
+        outline: white solid 1px;
+      }
+      .time:active {
+        color: var(--color-line-primary);
+        background-color: var(--color-line-secondary);
+      }
 
-.time >span {
-  position: absolute;
-  font-size: 1.6rem;
-  left: 0;
-  top: -2px;
-}
+      .time >span {
+        position: absolute;
+        font-size: 1.6rem;
+        left: 0;
+        top: -2px;
+      }
 
-.dpshps {
-  min-width: 3rem;
-}
+      .dpshps {
+        min-width: 3rem;
+      }
 
-.flex {
-  display: flex;
-  white-space: nowrap;
-}
+      .flex {
+        display: flex;
+        white-space: nowrap;
+      }
 
-.active {
-  min-width: 5rem;
-  margin-right: 1rem;
-}
+      .active {
+        min-width: 5rem;
+        margin-right: 1rem;
+      }
 
-.dpstable {
-  display: block;
-}
+      .dpstable {
+        display: block;
+      }
 
-.hpstable {
-  display: block;
-}
+      .hpstable {
+        display: block;
+      }
 
-.table {
-  width: 100%;
-  border-collapse: collapse;
-}
+      .table {
+        width: 100%;
+        border-collapse: collapse;
+      }
 
-tr {
-  border-bottom: solid 1px;
-  border-color: var(--color-line-secondary);
-}
+      tr {
+        border-bottom: solid 1px;
+        border-color: var(--color-line-secondary);
+      }
 
-tr:last-child {
-  border-color: var(--color-line-primary);
-}
+      tr:last-child {
+        border-color: var(--color-line-primary);
+      }
 
-th {
-  font-size: 0.6rem;
-  border-bottom: solid 1px;
-  border-color: var(--color-line-primary);
-}
+      th {
+        font-size: 0.6rem;
+        border-bottom: solid 1px;
+        border-color: var(--color-line-primary);
+      }
 
-.job {
-  width: 40px;
-}
+      .job {
+        width: 40px;
+      }
 
-td.job {
-  display: flex;
-  justify-content: center;
-}
+      td.job {
+        display: flex;
+        justify-content: center;
+      }
 
-.job-icon {
-  width: 17px;
-  height: 17px;
-}
+      .job-icon {
+        width: 17px;
+        height: 17px;
+      }
 
-.job-icon > img {
-  width: 17px;
-  height: 17px;
-}
+      .job-icon > img {
+        width: 17px;
+        height: 17px;
+      }
 
-.dps {
-  width: 50px;
-}
+      .dps {
+        width: 50px;
+      }
 
-.crit, .direct, .directcrit, .death {
-  width: 50px;
-}
+      .crit, .direct, .directcrit, .death {
+        width: 50px;
+      }
 
-td.job, td.name, td.death {
-  text-align: center;
-}
+      td.job, td.name, td.death {
+        text-align: center;
+      }
 
-td.dps, td.crit, td.direct, td.directcrit {
-  text-align: right;
-}
-  </style>
-</body>
-
+      td.dps, td.crit, td.direct, td.directcrit {
+        text-align: right;
+      }
+    </style>
+  </body>
 </html>
